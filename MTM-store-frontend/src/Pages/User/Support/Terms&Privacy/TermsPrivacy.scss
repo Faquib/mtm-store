@@ -1,0 +1,258 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700&display=swap');
+
+// Variables
+$primary-color: #4a6bff;
+$primary-light: rgba($primary-color, 0.1);
+$secondary-color: #6c757d;
+$dark-color: #2d3748;
+$light-color: #f8f9fa;
+$border-radius: 12px;
+$box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+// Fonts
+$font-primary: 'Inter', sans-serif;
+$font-heading: 'Manrope', sans-serif;
+
+// Base Styles
+// Back Button Styles
+.back-button {
+    position: fixed;
+    top: 7rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $primary-light;
+    color: $primary-color;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: $border-radius;
+    font-family: $font-heading;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 100;
+    transition: $transition;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background: rgba($primary-color, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    span {
+        @media (max-width: 576px) {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        top: 0.8rem;
+        left: 0.8rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+// Adjust the container margin to account for the back button
+.terms-privacy-container {
+    max-width: 1200px;
+    margin: 90px auto 2rem; // Added top margin for the back button
+    padding: 2rem 1rem;
+    font-family: $font-primary;
+    color: $dark-color;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+        margin-top: 100px; // Slightly more space on desktop
+    }
+
+    @media (max-width: 576px) {
+        margin-top: 80px; // Less space needed on mobile
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+
+    h1 {
+        font-family: $font-heading;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: $dark-color;
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        color: $secondary-color;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+
+    button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        background: $light-color;
+        border-radius: $border-radius;
+        font-family: $font-heading;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+        color: $secondary-color;
+        font-size: 1rem;
+
+        &.active {
+            background: $primary-color;
+            color: white;
+            box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+        }
+
+        @media (max-width: 576px) {
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.content-wrapper {
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+        padding: 1.5rem;
+    }
+}
+
+h2 {
+    font-family: $font-heading;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: $dark-color;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 1.75rem;
+    }
+}
+
+.policy-section {
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba($secondary-color, 0.1);
+    border-radius: $border-radius;
+    overflow: hidden;
+    transition: $transition;
+
+    &:hover {
+        border-color: rgba($primary-color, 0.2);
+    }
+
+    .section-header {
+        padding: 1.2rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        background: white;
+        transition: $transition;
+
+        h3 {
+            font-family: $font-heading;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            color: $dark-color;
+        }
+
+        svg {
+            color: $secondary-color;
+            transition: $transition;
+        }
+    }
+
+    .section-content {
+        padding: 0 1.5rem;
+        background: rgba($primary-color, 0.02);
+        overflow: hidden;
+
+        p,
+        h3 {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        p {
+            color: lighten($dark-color, 10%);
+        }
+
+        h3 {
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            color: $dark-color;
+        }
+
+        a {
+            color: $primary-color;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+    .policy-section {
+        .section-header {
+            padding: 1rem;
+
+            h3 {
+                font-size: 1rem;
+            }
+        }
+
+        .section-content {
+            padding: 0 1rem 1rem;
+        }
+    }
+}
+
+// Remove link underlines globally
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+}

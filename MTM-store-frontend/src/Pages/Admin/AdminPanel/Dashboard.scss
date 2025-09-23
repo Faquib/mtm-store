@@ -1,0 +1,272 @@
+// Variables
+$primary-color: #4361ee;
+$success-color: #4cc9f0;
+$warning-color: #f8961e;
+$danger-color: #f72585;
+$info-color: #7209b7;
+$dark-color: #212529;
+$light-color: #f8f9fa;
+$border-radius: 12px;
+$box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+$transition: all 0.3s ease;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Base Styles
+.dashboard-container {
+  padding: 2rem;
+  color: $dark-color;
+  max-width: 1800px;
+  margin: 0 auto;
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .dashboard-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $dark-color;
+      margin: 0;
+    }
+  }
+
+  // Stats Grid
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .stats-card {
+      background: white;
+      border-radius: $border-radius;
+      padding: 1.5rem;
+      box-shadow: $box-shadow;
+      transition: $transition;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      &.primary {
+        border-left: 4px solid $primary-color;
+      }
+
+      &.success {
+        border-left: 4px solid $success-color;
+      }
+
+      &.warning {
+        border-left: 4px solid $warning-color;
+      }
+
+      &.info {
+        border-left: 4px solid $info-color;
+      }
+
+      .stats-icon {
+        @include flex-center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        color: white;
+
+        .primary & {
+          background: $primary-color;
+        }
+        .success & {
+          background: $success-color;
+        }
+        .warning & {
+          background: $warning-color;
+        }
+        .info & {
+          background: $info-color;
+        }
+      }
+
+      .stats-content {
+        flex: 1;
+
+        h3 {
+          font-size: 1rem;
+          margin: 0 0 0.5rem;
+          color: #666;
+          font-weight: 500;
+        }
+
+        p {
+          font-size: 1.5rem;
+          margin: 0;
+          font-weight: 700;
+        }
+
+        .trend {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          font-size: 0.8rem;
+          margin-top: 0.5rem;
+
+          &.up {
+            color: $success-color;
+          }
+          &.down {
+            color: $danger-color;
+          }
+          &.neutral {
+            color: $warning-color;
+          }
+        }
+      }
+    }
+  }
+
+  // Charts Row
+  .charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+      background: white;
+      border-radius: $border-radius;
+      padding: 1.5rem;
+      box-shadow: $box-shadow;
+
+      h3 {
+        margin: 0 0 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: $dark-color;
+      }
+
+      .chart-wrapper {
+  height: 250px;
+  width: 100%; // Add this
+  position: relative;
+}
+    }
+  }
+
+  // Best Sellers Section
+  .best-sellers-section {
+    .best-sellers {
+      background: white;
+      border-radius: $border-radius;
+      padding: 1.5rem;
+      box-shadow: $box-shadow;
+      width: 100%;
+
+      h3 {
+        margin: 0 0 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: $dark-color;
+      }
+
+      .chart-wrapper {
+        height: 250px;
+        margin-bottom: 1rem;
+      }
+
+      .sellers-list {
+        .seller-item {
+          display: flex;
+          align-items: center;
+          padding: 0.75rem 0;
+          border-bottom: 1px solid #eee;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .rank {
+            width: 30px;
+            height: 30px;
+            @include flex-center;
+            background: #f0f0f0;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 1rem;
+          }
+
+          .product {
+            flex: 1;
+            font-weight: 500;
+          }
+
+          .units, .revenue {
+            width: 100px;
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: 576px) {
+  .dashboard-container {
+    padding: 1rem;
+
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .best-sellers-section {
+      .best-sellers {
+        .sellers-list {
+          .seller-item {
+            font-size: 0.9rem;
+
+            .units, .revenue {
+              width: 80px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Loading and Error States
+.loader-container {
+  @include flex-center;
+  height: 100vh;
+}
+
+.error-message {
+  @include flex-center;
+  color: $danger-color;
+  font-size: 1.2rem;
+  font-weight: 500;
+}

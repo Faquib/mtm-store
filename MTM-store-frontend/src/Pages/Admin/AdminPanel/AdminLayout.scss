@@ -1,0 +1,89 @@
+// Variables
+$mobile-breakpoint: 768px;
+$transition-speed: 0.3s;
+$primary-color: #4a6bff;
+$sidebar-width: 260px;
+$sidebar-collapsed-width: 80px;
+$header-height: 60px;
+$navbar-height: 75px; // Added navbar height variable
+
+.admin-panel {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+}
+
+// Mobile Header - Simplified version
+.mobile-header {
+  display: none;
+  
+  @media (max-width: $mobile-breakpoint) {
+    display: flex;
+    position: fixed;
+    top: $navbar-height; // Positioned below the navbar
+    left: 0;
+    width: 100%;
+    height: $header-height;
+    background: white;
+    z-index: 1100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    padding: 0 1rem;
+    
+    .toggle-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: $primary-color;
+      z-index: 1101;
+    }
+  }
+}
+
+// Sidebar Overlay - Adjusted for navbar
+.sidebar-overlay {
+  display: none;
+  
+  @media (max-width: $mobile-breakpoint) {
+    display: block;
+    position: fixed;
+    top: $navbar-height + $header-height; // Starts below header
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-speed ease;
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+// Main Content - Adjusted for navbar
+.admin-content {
+  flex: 1;
+  transition: margin-left $transition-speed ease;
+  min-height: 100vh;
+  
+  &.sidebar-open {
+    margin-left: $sidebar-width;
+  }
+  
+  &.sidebar-closed {
+    margin-left: $sidebar-collapsed-width;
+  }
+  
+  @media (max-width: $mobile-breakpoint) {
+    margin-left: 0 !important;
+    padding-top: $navbar-height + $header-height; // Account for both navbar and header
+    
+    &.sidebar-open, &.sidebar-closed {
+      margin-left: 0;
+    }
+  }
+}

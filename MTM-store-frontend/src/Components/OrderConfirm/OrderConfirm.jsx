@@ -1,0 +1,138 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Lottie from 'lottie-react';
+import './OrderConfirm.scss';
+
+const OrderConfirm = () => {
+  const [orderData, setOrderData] = useState(null);
+  const [countdown, setCountdown] = useState(500);
+  const navigate = useNavigate();
+  const [animationData, setAnimationData] = useState(null);
+
+  useEffect(() => {
+    // Fetch animation data from URL
+    fetch('https://assets1.lottiefiles.com/packages/lf20_raiw2hpe.json')
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error('Error loading animation:', error));
+
+    const data = sessionStorage.getItem('orderInfo');
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setOrderData(parsedData);
+      sessionStorage.removeItem('orderInfo');
+    }
+
+    // Set up countdown timer
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          navigate('/');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [navigate]);
+
+  // Function to format the address
+  const formatAddress = (address) => {
+    if (!address) return '';
+    return `
+      ${address.name}, 
+      ${address.address_line}, 
+      ${address.locality}, 
+      ${address.city}, 
+      ${address.state} - ${address.pincode}
+      Mobile: ${address.mobile}
+      ${address.landmark ? `Landmark: ${address.landmark}` : ''}
+    `;
+  };
+
+  return (
+    <div className="order-confirm-container">
+      <div className="order-card">
+        <div className="animation-wrapper">
+          {animationData ? (
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              className="lottie-animation"
+            />
+          ) : (
+            <div className="loading-animation-placeholder">
+              <div className="spinner"></div>
+            </div>
+          )}
+        </div>
+        <h1 className="thank-you">Thank you for your order!</h1>
+        <p className="confirmation-text">
+          We're processing your order and will notify you once it's confirmed.
+        </p>
+
+        {orderData && (
+          <div className="order-details-section">
+            <div className="order-info">
+              <h3>Order Information</h3>
+              <p><strong>Order ID:</strong> {orderData.order?.order_id || 'N/A'}</p>
+              <p><strong>Order Date:</strong> {new Date(orderData.order?.created_at).toLocaleString()}</p>
+            </div>
+
+            <div className="shipping-info">
+              <h3>Shipping Address</h3>
+              <div className="address-block">
+                {orderData.address ? (
+                  <>
+                    <p><strong>{orderData.address.name}</strong></p>
+                    <p>{orderData.address.address_line}</p>
+                    <p>{orderData.address.locality}</p>
+                    <p>{orderData.address.city}, {orderData.address.state} - {orderData.address.pincode}</p>
+                    <p>Mobile: {orderData.address.mobile}</p>
+                    {orderData.address.landmark && <p>Landmark: {orderData.address.landmark}</p>}
+                  </>
+                ) : (
+                  <p>No shipping address available</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="note-section">
+          <p>📞 <strong>Note</strong> - Please WhatsApp payment screenshot with Order ID or call us</p>
+          <p>📞 <strong>नोट</strong> - कृपया ऑर्डर आईडी के साथ भुगतान स्क्रीनशॉट व्हाट्सएप करें या हमें कॉल करें</p>
+        </div>
+
+        <p className="countdown-text">
+          Redirecting to home in {countdown} seconds...
+        </p>
+
+        <div className="button-group">
+          <button className="home-btn" onClick={() => navigate('/')}>
+            Back to Home Now
+          </button>
+          <a
+            href={
+              orderData?.order?.order_id
+                ? `https://wa.me/917942541131?text=${encodeURIComponent(
+                  `Hi, I just placed an order. My Order ID is ${orderData.order.order_id}`
+                )}`
+                : "https://wa.me/917942541131"
+            }
+            className="whatsapp-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contact on WhatsApp"
+            title="Contact on WhatsApp"
+          >
+            {/* Empty - icon is added via CSS */}
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OrderConfirm;

@@ -1,0 +1,4 @@
+.env
+.venv
+MTM-store-backend/.env
+MTM-store-backend/.venv
